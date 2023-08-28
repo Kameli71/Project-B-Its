@@ -2,8 +2,6 @@ import os
 from decouple import config
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-# PRESTASHOP_API_URL = config('PRESTASHOP_API_URL')
-# PRESTASHOP_API_KEY = config('PRESTASHOP_API_KEY')
 PRESTASHOP_DB_USER = config('PRESTASHOP_DB_USER')
 PRESTASHOP_DB_PASSWD = config('PRESTASHOP_DB_PASSWD')
 PRESTASHOP_DB_HOST = config('PRESTASHOP_DB_HOST')
