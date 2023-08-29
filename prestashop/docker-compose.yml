@@ -26,6 +26,8 @@ services:
       - db.env
     networks:
       - prestashop_network
+    ports:
+      - 3307:3306
     volumes:
       - dbdata:/var/lib/mysql
   prestashop:
