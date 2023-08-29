@@ -27,7 +27,8 @@ class ps_webservice_permission(db.Model):
     resource = db.Column(db.String(50), nullable=False)
     method = db.Column(db.Enum('GET', 'POST', 'PUT', 'PATCH',
                                'DELETE', 'HEAD'), nullable=False)
-    id_webservice_account = db.Column(db.Integer, nullable=False)
+    id_webservice_account = db.Column(
+        db.Integer, nullable=False, autoincrement=True)
 
 
 class ps_webservice_account(db.Model):
@@ -46,5 +47,5 @@ class ps_webservice_account(db.Model):
 class ps_webservice_account_shop(db.Model):
     __tablename__ = 'ps_webservice_account_shop'
     id_webservice_account = db.Column(
-        db.Integer, primary_key=True, nullable=False)
+        db.Integer, primary_key=True, nullable=False, autoincrement=True)
     id_shop = db.Column(db.Integer, primary_key=True, nullable=False)
