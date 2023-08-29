@@ -4,12 +4,17 @@ from app.models import ps_configuration, ps_webservice_account, ps_webservice_ac
 from app.tools import enable_ws, random_key, RESOURCES, METHODS
 
 
-@app.route("/ws/is_ws_enabled")
+@app.route('/ws/is_ws_enabled')
 def is_ws_enabled():
     return enable_ws()
 
 
-@app.route("/ws/get_api_key/<service_name>", methods=['GET'])
+@app.route('/')
+def start():
+    return "plop"
+
+
+@app.route('/ws/get_api_key/<service_name>', methods=['GET'])
 def get_api_key(service_name):
     ws_new_key = random_key(32)
 
