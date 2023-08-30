@@ -1,3 +1,4 @@
+from flask import jsonify
 from app import db, app
 from app.models import ps_webservice_account, ps_webservice_account_shop, ps_webservice_permission
 from app.tools import enable_ws, random_key, RESOURCES, METHODS
@@ -5,7 +6,7 @@ from app.tools import enable_ws, random_key, RESOURCES, METHODS
 
 @app.route('/ws/is_ws_enabled')
 def is_ws_enabled():
-    return enable_ws()
+    return jsonify(enable_ws()), 200
 
 
 @app.route('/')
@@ -29,7 +30,6 @@ def get_api_key(service_name):
     ws_check_account = None
     try:
         ws_check_account = db.session.execute(statement).scalars()
-        # id_webservice_account_tmp = ws_check_account.id_webservice_account
         id_webservice_account_tmp = ws_check_account.one().id_webservice_account
 
     finally:
@@ -50,4 +50,4 @@ def get_api_key(service_name):
             db.session.add(permission)
             db.session.commit()
 
-    return ws_new_key
+    return jsonify(ws_new_key), 200
