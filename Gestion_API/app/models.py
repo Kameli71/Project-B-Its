@@ -1,7 +1,7 @@
 from app import db
 from sqlalchemy.sql import func
 from sqlalchemy.types import DateTime
-from sqlalchemy.dialects import mysql
+# from sqlalchemy.dialects import mysql
 
 
 class ps_configuration(db.Model):
