@@ -1,6 +1,5 @@
-from flask import request, jsonify
-from app import app, db
-from app.models import ps_configuration, ps_webservice_account, ps_webservice_account_shop, ps_webservice_permission
+from app import db, app
+from app.models import ps_webservice_account, ps_webservice_account_shop, ps_webservice_permission
 from app.tools import enable_ws, random_key, RESOURCES, METHODS
 
 
