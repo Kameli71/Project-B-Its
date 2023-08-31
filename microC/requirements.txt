@@ -1,8 +1,0 @@
-Flask
-Flask-SQLAlchemy
-requests
-Flask-Caching redis
-Flask-Limiter
-python-decouple
-Flask-CORS
-pip install python-dotenv
