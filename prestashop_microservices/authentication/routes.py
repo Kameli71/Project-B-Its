@@ -2,6 +2,47 @@ from flask import request, jsonify  # Importation des fonctions nécessaires de 
 from flask_jwt_extended import create_access_token, jwt_required  # Outils JWT pour la gestion des tokens
 from app import app, db  # Importation de l'application et de la base de données
 from models import User  # Importation du modèle utilisateur
+from wtforms import Form, StringField, PasswordField, validators
+
+#Validation des Entrées Utilisateur : Il est important de valider les données envoyées par l'utilisateur lors de l'inscription et de la connexion pour se protéger contre les attaques comme l'injection SQL.
+class RegistrationForm(Form):
+    username = StringField('Username', [validators.Length(min=4, max=20)])
+    password = PasswordField('Password', [validators.DataRequired()])
+
+# Fonctionnalité pour permettre aux utilisateurs de réinitialiser leur mot de passe.
+@app.route('/reset_password', methods=['POST'])
+def reset_password():
+    data = request.get_json()
+    user = User.query.filter_by(username=data['username']).first()
+    if user:
+        token = create_access_token(identity=user.username)
+        return jsonify({"access_token": token}), 200
+    return jsonify({"message": "Invalid credentials!"}), 401
+
+#La tenue de journaux d'audit peut être utile pour suivre les activités des utilisateurs et pour le débogage.
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+def log_event(event_message):
+    logging.info(event_message)
+    
+# Se protéger contre les attaques par force brute, vous pouvez ajouter une limite de taux aux routes sensibles.
+from flask_limiter import Limiter
+
+limiter = Limiter(app, key_func=get_remote_address)
+
+@app.route('/login', methods=['POST'])
+@limiter.limit("5 per minute")
+def login():
+    data = request.get_json()
+    user = User.query.filter_by(username=data['username']).first()
+    if user and user.check_password(data['password']):
+        token = create_access_token(identity=user.username)
+        return jsonify({"access_token": token}), 200
+    return jsonify({"message": "Invalid credentials!"}), 401
+
+
 
 @app.route('/')
 def index():

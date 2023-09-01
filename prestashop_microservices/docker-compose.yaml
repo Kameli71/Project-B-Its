@@ -29,19 +29,21 @@ services:
       - DATABASE_URL=${DATABASE_URL}
 
   db:
-    image: mariadb:latest
+    image: mariadb:11.1  # Spécifiez une version
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: /run/secrets/db_password
       MYSQL_DATABASE: prestashop
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    secrets:
+      - db_password
     networks:
       - prestashop-network
     volumes:
       - db-data:/var/lib/mysql
 
   nginx:
-    image: nginx:latest
+    image: nginx:1.19.6  # Spécifiez une version
     ports:
       - "80:80"
     volumes:
@@ -50,7 +52,7 @@ services:
       - prestashop-network
 
   prestashop-api:
-    image: prestashop/prestashop:latest
+    image: prestashop/prestashop:1.7.7.0  # Spécifiez une version
     networks:
       - prestashop-network
     environment:
@@ -65,3 +67,8 @@ networks:
 
 volumes:
   db-data:
+
+secrets:
+  db_password:
+    file: db_password.secret
+
