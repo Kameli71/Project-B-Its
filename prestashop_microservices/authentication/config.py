@@ -6,7 +6,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///auth.db'  # URI de la base de données
     JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')  # Clé secrète pour JWT
 
-# Dans config.py
 class DevelopmentConfig(Config):
     DEBUG = True
     TESTING = False
