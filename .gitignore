@@ -14,4 +14,27 @@ venv/
 .vscode/
 .idea/
 *.log
+
+
 .gitignore
+# Fichiers de configuration
+db_password.secret
+
+# Dossiers de base de données
+instance/
+
+# Fichiers compilés et caches
+__pycache__/
+*.pyc
+
+# Dossiers de tests
+*/tests/
+
+
+# Fichiers de migrations
+migrations/
+
+# Fichiers et dossiers spécifiques à l'environnement virtuel (venv)
+venv/
+
+# Autres fichiers et dossiers à ignorer (ajoutez ici tout autre fichier/dossier que vous ne voulez pas suivre)
