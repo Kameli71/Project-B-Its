@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import request, jsonify
-from prestashop1 import fetch_product
+from shop import fetch_product
 from models import Order, db, app
            
 @app.route('/')
@@ -40,4 +40,4 @@ def not_found(e):
 def server_error(e):
     return jsonify({"error": "Internal server error"}), 500
 
-app.run()
+# app.run()

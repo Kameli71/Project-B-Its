@@ -10,7 +10,7 @@ headers = {
 }
 
 def fetch_product(product_id):
-    response = requests.get(f'{PRESTASHOP_API_URL}/products/{product_id}', headers=headers)
+    response = requests.get(f'http://{PRESTASHOP_API_URL}/api/products/{product_id}', headers=headers)
     if response.status_code == 200:
         try:
             product_data_xml = response.content.decode("utf-8")

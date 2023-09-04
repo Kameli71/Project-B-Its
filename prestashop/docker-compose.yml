@@ -25,13 +25,13 @@ services:
     env_file:
       - db.env
     networks:
-      - prestashop_network
+      - prestashop
     ports:
       - 3307:3306
     volumes:
       - dbdata:/var/lib/mysql
-  prestashop:
-    container_name: prestashop
+  prestashop_bis:
+    container_name: prestashop_bis
     image: prestashop/prestashop:latest # Latest stable version of the PrestaShop, to see all available images go to ...
     restart: unless-stopped
     depends_on:
@@ -41,13 +41,19 @@ services:
     env_file:
       - presta.env
     networks:
-      - prestashop_network
+      - prestashop
+  microservice:
+    container_name: my-microservice
+    build: ../microB/app
+    restart: unless-stopped
+    ports:
+      - 5000:5000
+    env_file:
+      - ../microB/app/.env
+    networks:
+      - prestashop
 networks:
-    prestashop_network:
+    prestashop:
 volumes:
-  ng1:
-  ng2:
-  ng3:
-  ng4:
   psdata:
   dbdata:
