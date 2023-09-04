@@ -1,6 +1,6 @@
 from flask import request, jsonify  # Importation des fonctions nécessaires de Flask
-from app import app, db  # Importation de l'application et de la base de données
-from models import Review  # Importation du modèle avis
+from .app import app, db  # Importation de l'application et de la base de données
+from .models import Review  # Importation du modèle avis
 
 # Route pour gérer les avis
 @app.route('/reviews', methods=['GET', 'POST'])

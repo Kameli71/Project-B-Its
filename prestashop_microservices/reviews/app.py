@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from config import Config
+from .config import Config
 import os
 from dotenv import load_dotenv
 
@@ -15,7 +15,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 
 # Importer les routes après l'initialisation de l'app
-from routes import *
+from .routes import *
 
 if __name__ == '__main__':
     with app.app_context():  # Création d'un contexte d'application

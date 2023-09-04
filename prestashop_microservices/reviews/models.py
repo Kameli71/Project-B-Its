@@ -1,4 +1,4 @@
-from app import db  # Importation de l'objet db depuis app
+from .app import db  # Importation de l'objet db depuis app
 
 # Modèle avis
 class Review(db.Model):

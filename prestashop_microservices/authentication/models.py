@@ -1,4 +1,4 @@
-from app import db  # Importation de l'objet db depuis app
+from .app import db  # Importation de l'objet db depuis app
 from werkzeug.security import generate_password_hash, check_password_hash  # Outils pour gérer les mots de passe
 
 # Modèle utilisateur

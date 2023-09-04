@@ -1,7 +1,7 @@
 from flask import request, jsonify  # Importation des fonctions nécessaires de Flask
 from flask_jwt_extended import create_access_token, jwt_required  # Outils JWT pour la gestion des tokens
-from app import app, db  # Importation de l'application et de la base de données
-from models import User  # Importation du modèle utilisateur
+from .app import app, db  # Importation de l'application et de la base de données
+from .models import User  # Importation du modèle utilisateur
 from wtforms import Form, StringField, PasswordField, validators
 # Se protéger contre les attaques par force brute, vous pouvez ajouter une limite de taux aux routes sensibles.
 from flask_limiter import Limiter

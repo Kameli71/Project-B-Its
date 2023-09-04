@@ -1,0 +1,17 @@
+prestashop/db.env
+prestashop/presta.env
+microservices/venv/*
+*pycache__/
+*.env
+__pycache__/
+*.pyc
+database.db
+*.db
+instance/
+db_password.secret
+venv/
+*/tests/
+.vscode/
+.idea/
+*.log
+.gitignore

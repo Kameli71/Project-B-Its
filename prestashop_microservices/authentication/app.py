@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
-from config import Config
+from .config import Config
 import os
 from dotenv import load_dotenv
 
@@ -19,7 +19,7 @@ db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
 # Importer les routes après l'initialisation de l'app
-from routes import *
+from .routes import *
 
 if __name__ == '__main__':
     with app.app_context():  # Création d'un contexte d'application
