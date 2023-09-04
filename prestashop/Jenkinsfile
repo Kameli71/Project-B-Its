@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('clone') {
+            steps {
+                sh "git clone https://github.com/Projetits/Project-B-Its.git"
+                echo "Clonage du repo en cour..."
+            }
+        }
+        stage('Build') {
+            steps {
+                sh "cd prestashop/ && docker-compose up"
+                echo 'Installation de prestashop'
+            }
+        }
+    }
+}
