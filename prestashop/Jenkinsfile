@@ -20,8 +20,8 @@ pipeline {
                 PRESTA_VAR = credentials('PRESTA_VAR')
             }
             steps {
-                sh('cp $DB_PRESTA ./Project-B-Its/prestashop/')
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
+                sh('cp $DB_PRESTA ./Project-B-Its/prestashop/')
                 echo "Clonage du repo en cour..."
             }
         }
