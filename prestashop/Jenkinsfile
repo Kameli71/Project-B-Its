@@ -1,20 +1,14 @@
 def workspace
-node {
-    workspace = env.WORKSPACE
-}
 pipeline {
     agent any
-    parameters {
-        string(name: 'JENKINS_WORKSPACE', defaultValue: workspace, description: 'Jenkins WORKSPACE')
-    }
     stages {
-        stage('access env variable') {
+        stage('Clean') {
             steps {
                 cleanWs()
                 // in groovy
                 // echo "${env.WORKSPACE}"
                 //in shell
-                sh 'echo $WORKSPACE'
+                // sh 'echo $WORKSPACE'
                 // in groovy script 
                 // script {
                 //     print env.WORKSPACE
@@ -22,6 +16,10 @@ pipeline {
             }
         }
         stage('clone') {
+            environment {
+                db.env = credentials('DB_PRESTA')
+                presta.env = credentials('PRESTA_VAR')
+            }
             steps {
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
                 echo "Clonage du repo en cour..."
