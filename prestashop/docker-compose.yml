@@ -23,7 +23,7 @@ services:
     image: mariadb:lts
     restart: unless-stopped
     env_file:
-      - db.env
+      - DB_PRESTA
     networks:
       - prestashop
     ports:
@@ -39,7 +39,7 @@ services:
     ports:
       - 8080:80
     env_file:
-      - presta.env
+      - PRESTA_VAR
     networks:
       - prestashop
   # microservice:
