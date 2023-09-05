@@ -15,6 +15,7 @@ pipeline {
             }
         }
         stage('clone') {
+            
             environment {
                 DB_PRESTA = credentials('DB_PRESTA')
                 PRESTA_VAR = credentials('PRESTA_VAR')
