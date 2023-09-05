@@ -10,6 +10,7 @@ pipeline {
     stages {
         stage('access env variable') {
             steps {
+                cleanWs()
                 // in groovy
                 // echo "${env.WORKSPACE}"
                 //in shell
@@ -22,7 +23,6 @@ pipeline {
         }
         stage('clone') {
             steps {
-                cleanWs()
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
                 echo "Clonage du repo en cour..."
             }
