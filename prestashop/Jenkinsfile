@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "cd prestashop/ && docker compose up"
+                sh "cd ./prestashop/ && docker compose up"
                 echo 'Installation de prestashop'
             }
         }
