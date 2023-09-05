@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh "cd ./Project-B-Its/prestashop/ && docker compose up"
+                sh "cd ./Project-B-Its/prestashop/ && docker compose up --env-file $DB_PRESTA"
                 echo 'Installation de prestashop'
             }
         }
