@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('clone') {
             steps {
+                cleanWs()
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
                 echo "Clonage du repo en cour..."
             }
