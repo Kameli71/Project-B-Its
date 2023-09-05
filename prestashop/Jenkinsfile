@@ -20,15 +20,15 @@ pipeline {
                 PRESTA_VAR = credentials('PRESTA_VAR')
             }
             steps {
-                // sh "mv $DB_PRESTA ./Project-B-Its/prestashop/"
-                // sh "mv $PRESTA_VAR ./Project-B-Its/prestashop/"
+                sh "mv $DB_PRESTA ./Project-B-Its/prestashop/$DB_PRESTA"
+                sh "mv $PRESTA_VAR ./Project-B-Its/prestashop/$PRESTA_VAR"
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
                 echo "Clonage du repo en cour..."
             }
         }
         stage('Build') {
             steps {
-                sh "cd ./Project-B-Its/prestashop/ && docker compose up --env-file $DB_PRESTA"
+                sh "cd ./Project-B-Its/prestashop/ && docker compose up"
                 echo 'Installation de prestashop'
             }
         }
