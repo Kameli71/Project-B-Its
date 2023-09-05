@@ -8,7 +8,6 @@ pipeline {
         string(name: 'JENKINS_WORKSPACE', defaultValue: workspace, description: 'Jenkins WORKSPACE')
     }
     stages {
-        stages {
         stage('access env variable') {
             steps {
                 // in groovy
@@ -21,7 +20,6 @@ pipeline {
                 // }
             }
         }
-    }
         stage('clone') {
             steps {
                 cleanWs()
@@ -37,3 +35,4 @@ pipeline {
         }
     }
 }
+   
