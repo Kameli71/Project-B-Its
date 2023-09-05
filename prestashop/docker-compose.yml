@@ -22,7 +22,7 @@ services:
     container_name: some-mysql
     image: mariadb:lts
     restart: unless-stopped
-    env_file:
+    environment:
       - DB_PRESTA
     networks:
       - prestashop
@@ -38,7 +38,7 @@ services:
       - mysql
     ports:
       - 8080:80
-    env_file:
+    environment:
       - PRESTA_VAR
     networks:
       - prestashop
