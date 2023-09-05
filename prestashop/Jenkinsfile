@@ -16,8 +16,8 @@ pipeline {
         }
         stage('clone') {
             environment {
-                db.env = credentials('DB_PRESTA')
-                presta.env = credentials('PRESTA_VAR')
+                DB_PRESTA = credentials('DB_PRESTA')
+                PRESTA_VAR = credentials('PRESTA_VAR')
             }
             steps {
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
