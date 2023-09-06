@@ -30,6 +30,7 @@ pipeline {
                 //     userRemoteConfigs: [[url: 'https://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@github.com/Projetits/Project-B-Its.git']]
                 //     )
                 // // sh "cd Project-B-Its"
+                sh('pwd')
                 sh('cp $DB_PRESTA ./prestashop/')
                 sh('cp $PRESTA_VAR ./prestashop/')
                 sh('cp $PRESTA_KEY_MNG ./prestashop/')
