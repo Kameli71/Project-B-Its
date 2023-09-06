@@ -33,6 +33,19 @@ pipeline {
                 echo 'Installation de prestashop'
             }
         }
+    post {
+        // Clean after build
+        always {
+            cleanWs(cleanWhenNotBuilt: false,
+                    deleteDirs: true,
+                    disableDeferredWipeout: true,
+                    notFailBuild: true,
+                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
+                               [pattern: 'db.env', type: 'INCLUDE'],
+                               [pattern: 'presta.env', type: 'INCLUDE'],
+                               [pattern: '.propsfile', type: 'EXCLUDE']])
+        }
+    }
     }
 }
    
