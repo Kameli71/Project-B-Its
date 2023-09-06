@@ -33,7 +33,7 @@ services:
   prestashop_bis:
     container_name: prestashop_bis
     image: prestashop/prestashop:latest # Latest stable version of the PrestaShop, to see all available images go to ...
-    # restart: unless-stopped
+    restart: unless-stopped
     depends_on:
       - mysql
     ports:
