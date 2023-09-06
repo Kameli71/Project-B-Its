@@ -22,9 +22,14 @@ pipeline {
                 PRESTA_KEY_MNG = credentials('PRESTA_KEY_MNG')
             }
             steps {
-                sh "git clone https://github.com/Projetits/Project-B-Its.git"
+                // sh "git clone https://github.com/Projetits/Project-B-Its.git"
+                // sh "cd Project-B-Its"
+                // sh "git checkout gestion_api"
+                checkout scmGit(branches: [[name: '*/gestion_api']],
+                    extensions: [],
+                    userRemoteConfigs: [[url: 'https://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@github.com/Projetits/Project-B-Its.git']]
+                    )
                 sh "cd Project-B-Its"
-                sh "git checkout gestion_api"
                 sh('cp $DB_PRESTA ./prestashop/')
                 sh('cp $PRESTA_VAR ./prestashop/')
                 sh('cp $PRESTA_KEY_MNG ./prestashop/')
@@ -41,7 +46,7 @@ pipeline {
         stage('Test_clean') {
             steps {
                 sh "docker container stop some-mysql && docker container stop prestashop"
-                sh "docker container prune"
+                sh "docker container prune -f"
             }
         }
     }
