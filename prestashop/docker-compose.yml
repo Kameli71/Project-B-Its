@@ -5,7 +5,7 @@ services:
     image: mariadb:lts
     restart: unless-stopped
     env_file:
-      - DB_PRESTA
+      - $DB_PRESTA
     networks:
       - prestashop
     ports:
@@ -21,7 +21,7 @@ services:
     ports:
       - 8080:80
     env_file:
-      - PRESTA_VAR
+      - $PRESTA_VAR
     networks:
       - prestashop
   api_key:
@@ -34,7 +34,7 @@ services:
     ports:
       - 5151:5051
     env_file:
-      - PRESTA_KEY_MNG
+      - $PRESTA_KEY_MNG
     networks:
       - prestashop
 networks:
