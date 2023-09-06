@@ -33,6 +33,7 @@ pipeline {
                 echo 'Installation de prestashop'
             }
         }
+    }
     post {
         // Clean after build
         always {
@@ -45,7 +46,6 @@ pipeline {
                                [pattern: 'presta.env', type: 'INCLUDE'],
                                [pattern: '.propsfile', type: 'EXCLUDE']])
         }
-    }
     }
 }
    
