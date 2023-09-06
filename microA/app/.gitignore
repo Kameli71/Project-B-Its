@@ -1,0 +1,8 @@
+venv/
+pycache/
+pycache/**
+*.env
+*.pyc
+*.py[cod]
+app/database.db
+.env

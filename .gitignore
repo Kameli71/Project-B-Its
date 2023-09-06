@@ -1,8 +1,5 @@
 prestashop/db.env
 prestashop/presta.env
 microservices/venv/*
-microA/app/venv/*
-venv/
-*.pyc
 *pycache__/
 *.env

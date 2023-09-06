@@ -1,0 +1,19 @@
+0000000000000000000000000000000000000000 0b58b7f0d567b9bbff9cecd5de80173e2b59d987 Nasim <Nasimhaidari371@gmail.com> 1692868835 +0200	clone: from https://github.com/Kameli71/Project-B-Its.git
+0b58b7f0d567b9bbff9cecd5de80173e2b59d987 0b58b7f0d567b9bbff9cecd5de80173e2b59d987 Nasim <Nasimhaidari371@gmail.com> 1692869018 +0200	checkout: moving from main to Branch-local
+0b58b7f0d567b9bbff9cecd5de80173e2b59d987 7efbc55defd86d9a0c9d5779657669954525ecc5 Nasim <Nasimhaidari371@gmail.com> 1692970984 +0200	commit: Micros-Service/API
+7efbc55defd86d9a0c9d5779657669954525ecc5 0000000000000000000000000000000000000000 Nasim <Nasimhaidari371@gmail.com> 1693209646 +0200	Branch: renamed refs/heads/Branch-local to refs/heads/Micro-Services
+0000000000000000000000000000000000000000 7efbc55defd86d9a0c9d5779657669954525ecc5 Nasim <Nasimhaidari371@gmail.com> 1693209646 +0200	Branch: renamed refs/heads/Branch-local to refs/heads/Micro-Services
+7efbc55defd86d9a0c9d5779657669954525ecc5 244b08a16b156b5ac525e21af0e20232836af0b2 Nasim <Nasimhaidari371@gmail.com> 1693210010 +0200	checkout: moving from Micro-Services to dev
+244b08a16b156b5ac525e21af0e20232836af0b2 7efbc55defd86d9a0c9d5779657669954525ecc5 Nasim <Nasimhaidari371@gmail.com> 1693210085 +0200	checkout: moving from dev to Micro-Services
+7efbc55defd86d9a0c9d5779657669954525ecc5 7efbc55defd86d9a0c9d5779657669954525ecc5 Nasim <Nasimhaidari371@gmail.com> 1693210117 +0200	checkout: moving from Micro-Services to Micro-Services
+7efbc55defd86d9a0c9d5779657669954525ecc5 244b08a16b156b5ac525e21af0e20232836af0b2 Nasim <Nasimhaidari371@gmail.com> 1693210131 +0200	merge dev: Fast-forward
+244b08a16b156b5ac525e21af0e20232836af0b2 5c910e46f544895e6f06ed9a540754ccc4bf4ef0 Nasim <Nasimhaidari371@gmail.com> 1694006263 +0200	commit: test rectif
+5c910e46f544895e6f06ed9a540754ccc4bf4ef0 244b08a16b156b5ac525e21af0e20232836af0b2 Nasim <Nasimhaidari371@gmail.com> 1694006369 +0200	checkout: moving from Micro-Services to dev
+244b08a16b156b5ac525e21af0e20232836af0b2 be9c9fe338351f6904929b6f01c353b245a57d81 Nasim <Nasimhaidari371@gmail.com> 1694006375 +0200	pull: Fast-forward
+be9c9fe338351f6904929b6f01c353b245a57d81 5c910e46f544895e6f06ed9a540754ccc4bf4ef0 Nasim <Nasimhaidari371@gmail.com> 1694006397 +0200	checkout: moving from dev to Micro-Services
+5c910e46f544895e6f06ed9a540754ccc4bf4ef0 589fca966a1a20986db62fc76d670b4a653a8be8 Nasim <Nasimhaidari371@gmail.com> 1694006566 +0200	commit: truc
+589fca966a1a20986db62fc76d670b4a653a8be8 d2ed92af3636273fa8dc22ea9327be5e7ae9f3f4 Nasim <Nasimhaidari371@gmail.com> 1694007222 +0200	commit (merge): test merge conflicts
+d2ed92af3636273fa8dc22ea9327be5e7ae9f3f4 d2ed92af3636273fa8dc22ea9327be5e7ae9f3f4 Nasim <Nasimhaidari371@gmail.com> 1694007361 +0200	checkout: moving from Micro-Services to nasim
+d2ed92af3636273fa8dc22ea9327be5e7ae9f3f4 c7450aab6ee730a91b533e07e6bdd3894284904b Nasim <Nasimhaidari371@gmail.com> 1694007420 +0200	commit: new branch test
+c7450aab6ee730a91b533e07e6bdd3894284904b f012201335e301d5e7aff8ad86117586587da16d Nasim <Nasimhaidari371@gmail.com> 1694007991 +0200	commit: new branch test
+f012201335e301d5e7aff8ad86117586587da16d f012201335e301d5e7aff8ad86117586587da16d Nasim <Nasimhaidari371@gmail.com> 1694009619 +0200	checkout: moving from nasim to nasim

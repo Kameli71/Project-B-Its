@@ -11,3 +11,5 @@ python-dotenv
 mysqlclient
 xmltodict
 python-decouple
+gunicorn
+

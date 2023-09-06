@@ -9,7 +9,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object('my_config')
 db.init_app(app)
 with app.app_context():
     db.create_all()
