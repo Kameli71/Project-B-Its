@@ -3,3 +3,5 @@ prestashop/presta.env
 microservices/venv/*
 venv/
 *.pyc
+*pycache__/
+*.env

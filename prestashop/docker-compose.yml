@@ -1,5 +1,23 @@
 version: '3'
 services:
+  # nginx:  # Nginx web server
+  #   build: prestashop-nginx:latest  # Latest Nginx Server Image
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - prestashop
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   networks:
+  #     - prestashop_network
+  #   volumes:
+  #   #   - ./src:/var/www/html  # Mount the local src directory to the container
+  #     - ./site.conf:/etc/nginx/conf.d/default.conf  # Mount the Nginx config
+  #     # - ./ssl:/etc/nginx/ssl  # Mount the SSL folder to provide certs
+  #     # - ng1:/templates:/etc/nginx/templates
+  #     # - ng2:/var/www/html/  # Mount the local src directory to the container
+  #     # - ng3:/etc/nginx/conf.d/  # Mount the Nginx config
+  #     # - ng4:/etc/nginx/ssl/  # Mount the SSL folder to provide certs
   mysql:
     container_name: some-mysql
     image: mariadb:lts
@@ -8,6 +26,8 @@ services:
       - db.env
     networks:
       - prestashop_network
+    ports:
+      - 3307:3306
     volumes:
       - dbdata:/var/lib/mysql
   prestashop:
@@ -25,5 +45,9 @@ services:
 networks:
     prestashop_network:
 volumes:
+  ng1:
+  ng2:
+  ng3:
+  ng4:
   psdata:
   dbdata:
