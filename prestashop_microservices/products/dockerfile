@@ -5,9 +5,13 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copiez les fichiers nécessaires dans le conteneur
-COPY requirements.txt requirements.txt
+COPY requirements.txt /app/
 
 # Installez les dépendances
+
+RUN pip install --upgrade pip
+
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiez le reste du code dans le conteneur
@@ -17,4 +21,7 @@ COPY . .
 EXPOSE 5001
 
 # Commande pour exécuter l'application
-CMD ["python", "app.py"]
+CMD ["python", "app.py" ] 
+ENTRYPOINT [ "./endpoint.sh" ]
+
+

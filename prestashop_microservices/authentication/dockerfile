@@ -8,6 +8,8 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 
 # Installez les dépendances
+RUN pip install --upgrade pip
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copiez le reste du code dans le conteneur

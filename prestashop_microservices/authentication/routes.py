@@ -1,13 +1,11 @@
-from flask import request, jsonify  # Importation des fonctions nécessaires de Flask
-from flask_jwt_extended import create_access_token, jwt_required  # Outils JWT pour la gestion des tokens
-from .app import app, db  # Importation de l'application et de la base de données
-from .models import User  # Importation du modèle utilisateur
+from flask import request, jsonify
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from wtforms import Form, StringField, PasswordField, validators
-# Se protéger contre les attaques par force brute, vous pouvez ajouter une limite de taux aux routes sensibles.
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+import logging
 
-
+from .app import app, db
 
 #Validation des Entrées Utilisateur : Il est important de valider les données envoyées par l'utilisateur lors de l'inscription et de la connexion pour se protéger contre les attaques comme l'injection SQL.
 class RegistrationForm(Form):
@@ -39,6 +37,7 @@ limiter = Limiter(get_remote_address, app=app)
 @app.route('/login', methods=['POST'])
 @limiter.limit("5 per minute")
 def login():
+    from .models import User 
     data = request.get_json()
     user = User.query.filter_by(username=data['username']).first()
     if user and user.check_password(data['password']):
@@ -55,6 +54,8 @@ def index():
 # Route d'enregistrement
 @app.route('/register', methods=['POST'])
 def register():
+    from .models import User
+
     data = request.get_json()  # Récupération des données envoyées
     user = User(username=data['username'])  # Création d'un nouvel utilisateur
     user.set_password(data['password'])  # Définition du mot de passe

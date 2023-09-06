@@ -1,6 +1,8 @@
 import pytest
-from authentication.app import app
 from authentication.models import User, db
+from authentication.app import app
+from authentication import routes
+
 
 
 @pytest.fixture
