@@ -36,6 +36,13 @@ pipeline {
                 echo 'Installation de prestashop'
             }
         }
+
+        stage('Test_clean') {
+            steps {
+                sh "docker container stop some-mysql && docker container stop prestashop"
+                sh "docker container prune"
+            }
+        }
     }
 }
    
