@@ -23,10 +23,11 @@ pipeline {
             }
             steps {
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
+                sh "cd Project-B-Its"
                 sh "git checkout gestion_api"
-                sh('cp $DB_PRESTA ./Project-B-Its/prestashop/')
-                sh('cp $PRESTA_VAR ./Project-B-Its/prestashop/')
-                sh('cp $PRESTA_KEY_MNG ./Project-B-Its/prestashop/')
+                sh('cp $DB_PRESTA ./prestashop/')
+                sh('cp $PRESTA_VAR ./prestashop/')
+                sh('cp $PRESTA_KEY_MNG ./prestashop/')
                 echo "Clonage du repo en cour..."
             }
         }
