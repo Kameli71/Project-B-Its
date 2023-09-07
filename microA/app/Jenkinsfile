@@ -2,22 +2,21 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Cette étape permet de récupérer le code source depuis votre référentiel Git
-                checkout([$class: 'GitSCM',
-                        branches: [[name: 'nasim/microA/app']],
-                        doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'RelativeTargetDirectory', relativeTargetDir: '']], 
-                        userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/Projetits/Project-B-Its.git']]
-                ])
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         // Cette étape permet de récupérer le code source depuis votre référentiel Git
+        //         checkout([$class: 'GitSCM',
+        //                 branches: [[name: 'nasim/microA/app']],
+        //                 doGenerateSubmoduleConfigurations: false,
+        //                 extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'RelativeTargetDirectory', relativeTargetDir: '']], 
+        //                 userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/Projetits/Project-B-Its.git']]
+        //         ])
+        //     }
+        // }
 
         stage('Build') {
             steps {
                 // Cette étape peut inclure la construction de votre application, par exemple, en utilisant un script ou une commande
-                sh 'docker-compose build'
                 sh "cd ./Project-B-Its/microA/app/ && docker compose up -d"
                 echo 'Installation de prestashop & Mico-Service'
             }
