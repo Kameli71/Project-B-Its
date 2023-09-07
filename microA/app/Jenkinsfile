@@ -1,50 +1,74 @@
 pipeline {
     agent any
+    environment {
+        DB_ENV = credentials('db.env')
+        PRESTA_ENV = credentials('presta.env')
+    }
     stages {
         stage('Clean') {
             steps {
                 cleanWs()
-                // in groovy
-                // echo "${env.WORKSPACE}"
-                //in shell
-                // sh 'echo $WORKSPACE'
-                // in groovy script 
-                // script {
-                //     print env.WORKSPACE
-                // }
+                echo 'Espace de travail nettoyé.'
             }
         }
-        stage('clone') {
 
-            environment {
-                DB_PRESTA = credentials('DB_PRESTA')
-                PRESTA_VAR = credentials('PRESTA_VAR')
-            }
+        stage('Checkout') {
             steps {
-                sh "git clone https://github.com/Projetits/Project-B-Its.git"
-                sh('cp $DB_PRESTA ./Project-B-Its/microA/app/')
-                sh('cp $PRESTA_VAR ./Project-B-Its/microA/app/')
-                echo "Clonage du repo en cour..."
+                // Récupérer le code source depuis GitHub
+                checkout([$class: 'GitSCM',
+                        branches: [[name: 'nasim']], // Spécifiez la branche souhaitée
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'RelativeTargetDirectory', relativeTargetDir: '']], 
+                        userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/Projetits/Project-B-Its.git']]]
+                )
+                echo 'Code source récupéré depuis GitHub.'
             }
         }
+
         stage('Build') {
             steps {
-                sh "cd ./Project-B-Its/microA/app/ && docker compose up -d"
-                echo 'Installation de prestashop & Installation de Micro-Services '
+                // Cette étape peut inclure la construction de votre application, par exemple, en utilisant un script ou une commande
+                sh 'cd ./microA/app/ && docker-compose up -d'
+                echo 'Installation de Prestashop & Installation Micro-Services'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir ('./microA/app'){
+                    script {
+                        // Installer pytest si ce n'est pas déjà fait
+                        sh 'pip install pytest'
+                        // Exécute les tests de l'application
+                        sh 'pytest'
+                        // sortie des tests
+                        sh 'pytest test_app.py'
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
+                sh 'docker-compose up -d'
             }
         }
     }
+
     post {
-        // Clean after build
-        always {
-            cleanWs(cleanWhenNotBuilt: false,
-                    deleteDirs: true,
-                    disableDeferredWipeout: true,
-                    notFailBuild: true,
-                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-                                [pattern: 'db.env', type: 'INCLUDE'],
-                                [pattern: 'presta.env', type: 'INCLUDE'],
-                                [pattern: '.propsfile', type: 'EXCLUDE']])
+        success {
+            // Cette section spécifie ce qui doit être fait en cas de succès du pipeline
+            echo 'Le pipeline a réussi!'
+
+            // Vous pouvez ajouter des actions supplémentaires ici, comme la notification par email
+        }
+
+        failure {
+            // Cette section spécifie ce qui doit être fait en cas d'échec du pipeline
+            echo 'Le pipeline a échoué!'
+
+            // Vous pouvez ajouter des actions supplémentaires ici, comme l'envoi d'une notification d'échec
         }
     }
 }
