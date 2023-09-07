@@ -33,6 +33,7 @@ def enable_ws():
     ws_status = None
     try:
         ws_status = db.session.execute(statement).scalar_one()
+        print(ws_status)
     except NoResultFound:
         ws_update = ps_configuration(
             name='PS_WEBSERVICE',
