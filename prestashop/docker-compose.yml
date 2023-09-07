@@ -5,7 +5,7 @@ services:
     image: mariadb:lts
     restart: unless-stopped
     env_file:
-      - DB_PRESTA
+      - db.env
     networks:
       - prestashop
     ports:
@@ -21,7 +21,7 @@ services:
     ports:
       - 8080:80
     env_file:
-      - PRESTA_VAR
+      - presta.env
     networks:
       - prestashop
   # microservice:
@@ -43,7 +43,7 @@ services:
       - 80:80
       - 443:443
     networks:
-      - prestashop_network
+      - prestashop
     volumes:
     #   - ./src:/var/www/html  # Mount the local src directory to the container
       - ./site.conf:/etc/nginx/conf.d/default.conf  # Mount the Nginx config
