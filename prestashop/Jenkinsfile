@@ -25,7 +25,6 @@ pipeline {
                 sh('pwd && ls -la')
                 sh('cp $DB_PRESTA ./prestashop/')
                 sh('cp $PRESTA_VAR ./prestashop/')
-                sh('cp $PRESTA_KEY_MNG ./prestashop/')
                 echo "Clonage du repo en cour..."
             }
         }
