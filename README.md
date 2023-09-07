@@ -39,4 +39,5 @@ Le docker-compose.yml intègre ce service, il faut toutefois avoir un fichier .e
 	<tr><td>PRESTASHOP_DB_HOST</td><td>nom du conteneur mariadb</td></tr>
 	<tr><td>PRESTASHOP_DB_PORT</td><td>port exposé du conteneur mariadb (par défaut 3306, attention même si on bind un autre port c'est bien le port exposé qui est atteignable)</td></tr>
 </table>
+
 A noter, le docker-compose.yml des branches *dev* et *Gestion_API* utilise les variables ```DB_PRESTA, PRESTA_VAR, PRESTA_KEY_MNG``` pour l'intégration via Jenkins, celles-ci font référence à des identifiants stockés dans Jenkins, pour une utilisation autonome il faut les remplacer par le path vers les fichiers d'environnement décrits dans ce README.
