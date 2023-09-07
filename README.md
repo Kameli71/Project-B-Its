@@ -24,3 +24,20 @@ Pour lancer la stack prestashop (appli prestashop et base de données mariadb) :
 	<tr><td>ADMIN_MAIL</td><td><em>identifiant_de_connexion_admin_prestashop</em></td></tr>
 	<tr><td>ADMIN_PASSWD</td><td><em>mot_de_passe_admin_prestashop</em></td></tr>
 </table>
+
+------
+## Microservice Gestion API
+Ce microservice sert à activer l'API de Prestashop et à récupérer une clef d'autorisation pour les autres microservices, il expose pour ceci deux endpoints :  
+* GET ```/ws/is_ws_enabled``` retourne False et active l'API si elle est inactive, et True si l'API est activée.
+* GET ```/ws/get_api_key/<service>``` enregistre une clef dans la db Prestashop avec le nom ```<service>``` renseigné et la retourne
+
+## Installation
+Le docker-compose.yml intègre ce service, il faut toutefois avoir un fichier .env qui contient les variables suivantes :  
+<table>
+	<tr><td>PRESTASHOP_DB_USER</td><td>identique à DB_USER et MYSQL_USER</td></tr>
+	<tr><td>PRESTASHOP_DB_PASSWD</td><td>identique à DB_PASSWD et MYSQL_PASSWORD</td></tr>
+	<tr><td>PRESTASHOP_DB_HOST</td><td>nom du conteneur mariadb</td></tr>
+	<tr><td>PRESTASHOP_DB_PORT</td><td>port exposé du conteneur mariadb (par défaut 3306, attention même si on bind un autre port c'est bien le port exposé qui est atteignable)</td></tr>
+</table>
+
+A noter, le docker-compose.yml des branches **dev** et **Gestion_API** utilise les variables ```DB_PRESTA, PRESTA_VAR, PRESTA_KEY_MNG``` pour l'intégration via Jenkins, celles-ci font référence à des identifiants stockés dans Jenkins, pour une utilisation autonome il faut les remplacer par le path vers les fichiers d'environnement décrits dans ce README.
