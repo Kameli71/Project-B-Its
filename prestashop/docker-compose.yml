@@ -23,9 +23,9 @@ services:
     image: mariadb:lts
     restart: unless-stopped
     env_file:
-      - db.env
+      - $DB_PRESTA
     networks:
-      - prestashop_network
+      - prestashop
     ports:
       - 3307:3306
     volumes:
@@ -39,11 +39,24 @@ services:
     ports:
       - 8080:80
     env_file:
-      - presta.env
+      - $PRESTA_VAR
     networks:
-      - prestashop_network
+      - prestashop
+  api_key:
+    container_name: api_manager
+    build: ../Gestion_API
+    # image: api_presta
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - 5151:5051
+    env_file:
+      - $PRESTA_KEY_MNG
+    networks:
+      - prestashop
 networks:
-    prestashop_network:
+    prestashop:
 volumes:
   ng1:
   ng2:

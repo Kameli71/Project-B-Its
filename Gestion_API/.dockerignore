@@ -1,0 +1,7 @@
+nux_venv/
+venv/
+__pycache__/
+**/__pycache*
+.pytest_cache/
+*.env
+*.pyc
