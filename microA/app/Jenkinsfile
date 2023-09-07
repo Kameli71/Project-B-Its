@@ -22,8 +22,8 @@ pipeline {
             }
             steps {
                 sh "git clone https://github.com/Projetits/Project-B-Its.git"
-                sh('cp $DB_PRESTA ./Project-B-Its/prestashop/')
-                sh('cp $PRESTA_VAR ./Project-B-Its/prestashop/')
+                sh('cp $DB_PRESTA ./Project-B-Its/microA/app/')
+                sh('cp $PRESTA_VAR ./Project-B-Its/microA/app/')
                 echo "Clonage du repo en cour..."
             }
         }
