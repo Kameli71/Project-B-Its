@@ -39,7 +39,7 @@ services:
     ports:
       - 8080:80
     env_file:
-      -$PRESTA_VAR
+      - PRESTA_VAR
     networks:
       - prestashop
   # microservice:
