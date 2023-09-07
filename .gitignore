@@ -1,4 +1,6 @@
 prestashop/db.env
+venv/
+*venv/
 prestashop/presta.env
 microservices/venv/*
 *pycache__/
