@@ -35,7 +35,7 @@ services:
   #   networks:
   #     - prestashop
   nginx:  # Nginx web server
-    build: prestashop-nginx:latest  # Latest Nginx Server Image
+    image: prestashop-nginx:latest  # Latest Nginx Server Image
     restart: unless-stopped
     depends_on:
       - prestashop_bis
