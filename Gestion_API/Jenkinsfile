@@ -1,5 +1,11 @@
 pipeline {
     agent any
+    environment {
+        PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
+        PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
+        PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
+        PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
+    }
     stages {
 
         stage('Clean') {
@@ -16,12 +22,12 @@ pipeline {
             }
         }
         stage('clone') {
-            environment {
-                PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
-                PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
-                PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
-                PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
-            }
+            // environment {
+            //     PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
+            //     PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
+            //     PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
+            //     PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
+            // }
             steps {
     //             withCredentials([file(credentialsId: 'PRESTA_MAIN_DEV', variable: 'PRESTA_MAIN_DEV'), file(credentialsId: 'PRESTA_DB_DEV', variable: 'PRESTA_DB_DEV'), file(credentialsId: 'PRESTA_API_KEY_DEV', variable: 'PRESTA_API_KEY_DEV'), string(credentialsId: 'PRESTA_PAT_DEV', variable: 'PRESTA_PAT_DEV')]) {
     // // some block
