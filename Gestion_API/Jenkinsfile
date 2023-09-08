@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        DB_PRESTA = credentials('PRESTA_DB')
-        PRESTA_VAR = credentials('PRESTA_MAIN')
-        PRESTA_KEY_MNG = credentials('PRESTA_API_KEY')
-        PRESTA_PAT = credentials('PRESTA_PAT')
+        DB_PRESTA = credentials('PRESTA_DB_DEV')
+        PRESTA_VAR = credentials('PRESTA_MAIN_DEV')
+        PRESTA_KEY_MNG = credentials('PRESTA_API_KEY_DEV')
+        PRESTA_PAT = credentials('PRESTA_PAT_DEV')
     }
     stages {
         stage('Clean') {
