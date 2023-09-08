@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        DB_PRESTA = credentials('PRESTA_DB_DEV')
-        PRESTA_VAR = credentials('PRESTA_MAIN_DEV')
-        PRESTA_KEY_MNG = credentials('PRESTA_API_KEY_DEV')
-        PRESTA_PAT = credentials('PRESTA_PAT_DEV')
+        PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
+        PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
+        PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
+        PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
     }
     stages {
         stage('Clean') {
@@ -26,13 +26,13 @@ pipeline {
                 echo "Clonage du repo en cour..."
                 checkout scmGit(branches: [[name: '*/dev_jo_compose']],
                  extensions: [],
-                 userRemoteConfigs: [[url: 'https://' + $PRESTA_PAT + '@github.com/Projetits/Project-B-Its.git']]
+                 userRemoteConfigs: [[url: 'https://'+$PRESTA_PAT_DEV+'@github.com/Projetits/Project-B-Its.git']]
                  )
                 // sh "cd Project-B-Its"
                 sh('pwd && ls -la')
-                sh('cp $DB_PRESTA ./prestashop/')
-                sh('cp $PRESTA_VAR ./prestashop/')
-                sh('cp $PRESTA_KEY_MNG ./prestashop/')
+                sh('cp $PRESTA_DB_DEV ./prestashop/')
+                sh('cp $PRESTA_MAIN_DEV ./prestashop/')
+                sh('cp $PRESTA_API_KEY_DEV ./prestashop/')
             }
         }
         stage('Build') {
