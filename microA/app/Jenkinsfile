@@ -41,7 +41,7 @@ pipeline {
                     script {
                         // Installer pytest si ce n'est pas déjà fait
                         // sh 'pip install pytest'
-                        sh 'apt-get install python3-pytest -y'
+                        sh 'sudo apt-get install python3-pytest -y'
                         // Exécute les tests de l'application
                         sh 'pytest'
                         // sortie des tests
