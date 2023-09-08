@@ -1,12 +1,7 @@
 pipeline {
     agent any
-    environment {
-        PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
-        PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
-        PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
-        PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
-    }
     stages {
+
         stage('Clean') {
             steps {
                 cleanWs()
@@ -21,7 +16,12 @@ pipeline {
             }
         }
         stage('clone') {
-            
+            environment {
+                PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
+                PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
+                PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
+                PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
+            }
             steps {
                 echo "Clonage du repo en cour..."
                 checkout scmGit(branches: [[name: '*/dev_jo_compose']],
