@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        DB_ENV = credentials('db.env')
-        PRESTA_ENV = credentials('presta.env')
+        DB_ENV = credentials('DB_PRESTA')
+        PRESTA_ENV = credentials('PRESTA_VAR')
     }
     stages {
         stage('Clean') {
