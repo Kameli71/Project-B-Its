@@ -1,6 +1,6 @@
 from flask import request, jsonify  # Importation des fonctions nécessaires de Flask
-from .app import app, db  # Importation de l'application et de la base de données
-from .models import Product  # Importation du modèle produit
+from app import app, db  # Importation de l'application et de la base de données
+from models import Product  # Importation du modèle produit
 import requests  # Module pour faire des requêtes HTTP
 
 # Fonction pour récupérer les données depuis l'API PrestaShop

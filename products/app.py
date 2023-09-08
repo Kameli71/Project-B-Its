@@ -1,9 +1,11 @@
-from flask import Flask
+import sys
+print(sys.path)
+
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from .config import Config
+from .config import Config  # Je suppose que config est dans le même répertoire, ajustez si nécessaire
 from dotenv import load_dotenv
-
 
 # Charger les variables d'environnement
 load_dotenv()
@@ -16,13 +18,26 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 
 # Initialiser Flask-Migrate
-migrate = Migrate(app, db)  # Nouvelle ligne
+migrate = Migrate(app, db)
 
 # Importer les routes après l'initialisation de l'app
-from .routes import *
+from routes import *
+ # Je suppose que routes est dans le même répertoire, ajustez si nécessaire
+
+# Ajouter un gestionnaire de route pour la racine
+@app.route('/')
+def home():
+    return render_template('index.html')  # Assurez-vous d'avoir un template index.html
+
+# Ajouter un gestionnaire d'erreur pour les erreurs 500
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500  # Assurez-vous d'avoir un template 500.html
+
+# Créer les tables au démarrage
+@app.before_first_request
+def create_tables():
+    db.create_all()
 
 if __name__ == '__main__':
-    with app.app_context():  # Création d'un contexte d'application
-        db.create_all()  # Créer la base de données si elle n'existe pas
-    app.run()  # Démarrer l'application
-
+    app.run()

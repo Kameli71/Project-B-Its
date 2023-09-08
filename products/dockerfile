@@ -8,20 +8,18 @@ WORKDIR /app
 COPY requirements.txt /app/
 
 # Installez les dépendances
-
 RUN pip install --upgrade pip
-
-
 RUN pip install --no-cache-dir -r requirements.txt
+
+# Ajoutez Gunicorn à vos dépendances
+RUN pip install gunicorn
 
 # Copiez le reste du code dans le conteneur
 COPY . .
 
-# Exposez le port sur lequel le microservice s'exécutera
-EXPOSE 5001
+# Définissez les variables d'environnement
+ENV FLASK_RUN_PORT=5001 
+ENV FLASK_APP=app.py 
 
-# Commande pour exécuter l'application
-ENTRYPOINT [ "flask", "run" ]
-#ENTRYPOINT [ "./entrypoint.sh" ]
-
-
+# Commande pour exécuter l'application Flask avec Gunicorn
+CMD ["gunicorn", "-b", "0.0.0.0:5001", "app:app"]
