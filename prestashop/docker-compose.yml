@@ -8,8 +8,6 @@ services:
       - $DB_PRESTA
     networks:
       - prestashop_dev
-    # ports:
-    #   - 3307:3306
     volumes:
       - dbdata_dev:/var/lib/mysql
   prestashop:
@@ -19,7 +17,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 8080:80
+      - 18080:80
     env_file:
       - $PRESTA_VAR
     networks:
@@ -32,7 +30,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 5151:5051
+      - 5252:5051
     env_file:
       - $PRESTA_KEY_MNG
     networks:
