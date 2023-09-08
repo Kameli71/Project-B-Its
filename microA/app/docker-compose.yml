@@ -10,8 +10,8 @@ services:
       - prestashop_network
     volumes:
       - dbdata:/var/lib/mysql
-  prestashop:
-    container_name: prestashop
+  prestashop1:
+    container_name: prestashop1
     image: prestashop/prestashop:latest # Latest stable version of the PrestaShop, to see all available images go to ...
     restart: unless-stopped
     depends_on:
