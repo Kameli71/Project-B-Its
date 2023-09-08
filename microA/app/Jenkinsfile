@@ -41,7 +41,8 @@ pipeline {
                     script {
                     // Exécutez les tests unitaires
                     // sh '/usr/bin/python3 -m unittest -v test_app.py'
-                    sh '/usr/local/bin/python3 -m unittest -v test_app.py'
+                    // sh '/usr/local/bin/python3 -m unittest -v test_app.py'
+                    sh "docker exec -i my-microservice python -m unittest ./tests"
                     }
                 }
             }
