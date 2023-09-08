@@ -16,23 +16,26 @@ pipeline {
             }
         }
         stage('clone') {
-            environment {
-                PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
-                PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
-                PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
-                PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
-            }
+            // environment {
+            //     PRESTA_DB_DEV = credentials('PRESTA_DB_DEV')
+            //     PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
+            //     PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
+            //     PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
+            // }
             steps {
-                echo "Clonage du repo en cour..."
-                checkout scmGit(branches: [[name: '*/dev_jo_compose']],
-                 extensions: [],
-                 userRemoteConfigs: [[url: 'https://'+$(PRESTA_PAT_DEV)+'@github.com/Projetits/Project-B-Its.git']]
-                 )
-                // sh "cd Project-B-Its"
-                sh('pwd && ls -la')
-                sh('cp $(PRESTA_DB_DEV) ./prestashop/')
-                sh('cp $(PRESTA_MAIN_DEV) ./prestashop/')
-                sh('cp $(PRESTA_API_KEY_DEV) ./prestashop/')
+                withCredentials([file(credentialsId: 'PRESTA_MAIN_DEV', variable: 'PRESTA_MAIN_DEV'), file(credentialsId: 'PRESTA_DB_DEV', variable: 'PRESTA_DB_DEV'), file(credentialsId: 'PRESTA_API_KEY_DEV', variable: 'PRESTA_API_KEY_DEV'), string(credentialsId: 'PRESTA_PAT_DEV', variable: 'PRESTA_PAT_DEV')]) {
+    // some block
+                    echo "Clonage du repo en cour..."
+                    checkout scmGit(branches: [[name: '*/dev_jo_compose']],
+                     extensions: [],
+                     userRemoteConfigs: [[url: 'https://'+$PRESTA_PAT_DEV+'@github.com/Projetits/Project-B-Its.git']]
+                     )
+                    // sh "cd Project-B-Its"
+                    sh('pwd && ls -la')
+                    sh('cp $PRESTA_DB_DEV ./prestashop/')
+                    sh('cp $PRESTA_MAIN_DEV ./prestashop/')
+                    sh('cp $PRESTA_API_KEY_DEV ./prestashop/')
+                }
             }
         }
         stage('Build') {
