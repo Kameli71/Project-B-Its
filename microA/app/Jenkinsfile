@@ -39,13 +39,12 @@ pipeline {
             steps {
                 dir ('./microA/app'){
                     script {
-                        // Installer pytest si ce n'est pas déjà fait
-                        sh 'python -m unittest -v test_app.py'
-                        // sh 'docker exec -i my-microservice python -m pytest test_app.py'
-                        // Exécute les tests de l'application
-                        // sh 'pytest'
-                        // sortie des tests
-                        // sh 'pytest test_app.py'
+                    // Assurez-vous que Python est installé sur le système
+                    def pythonHome = tool name: 'Python', type: 'Tool'
+                    def pythonExec = "${pythonHome}/bin/python"
+                    
+                    // Exécutez les tests unitaires
+                    sh "${pythonExec} -m unittest discover -s ./microA/app/ -p 'test_app_*.py'"
                     }
                 }
             }
