@@ -4,13 +4,11 @@ from flask_jwt_extended import JWTManager
 import os
 from dotenv import load_dotenv
 
+
 # Charge les variables d'environnement
 load_dotenv()
 # Affiche le répertoire de travail actuel (utile pour le débogage)
 print(os.getcwd())
-
-
-
 # Initialise l'application Flask
 app = Flask(__name__)
 
@@ -54,4 +52,4 @@ init_routes()
 if __name__ == '__main__':
     with app.app_context():  # Crée un contexte d'application
         db.create_all()  # Crée la base de données si elle n'existe pas
-    app.run(host='localhost', port=5010)  # Démarre l'application avec l'adresse d'écoute spécifiée
+        app.run(host='localhost', port=5010, debug=True)  # Démarre l'application avec l'adresse d'écoute spécifiée
