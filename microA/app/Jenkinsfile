@@ -40,7 +40,7 @@ pipeline {
                 dir ('./microA/app'){
                     script {
                         // Installer pytest si ce n'est pas déjà fait
-                        python -m unittest -v test_app.py
+                        sh 'python -m unittest -v test_app.py'
                         // sh 'docker exec -i my-microservice python -m pytest test_app.py'
                         // Exécute les tests de l'application
                         // sh 'pytest'
