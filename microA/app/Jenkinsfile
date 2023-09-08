@@ -40,7 +40,7 @@ pipeline {
                 dir ('./microA/app'){
                     script {
                     // Exécutez les tests unitaires
-                    sh 'python -m unittest -v test_app.py'
+                    sh '/usr/bin/python3 -m unittest -v test_app.py'
                     }
                 }
             }
