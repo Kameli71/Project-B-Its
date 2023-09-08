@@ -1,37 +1,19 @@
 version: '3'
 services:
-  # nginx:  # Nginx web server
-  #   build: prestashop-nginx:latest  # Latest Nginx Server Image
-  #   restart: unless-stopped
-  #   depends_on:
-  #     - prestashop
-  #   ports:
-  #     - 80:80
-  #     - 443:443
-  #   networks:
-  #     - prestashop_network
-  #   volumes:
-  #   #   - ./src:/var/www/html  # Mount the local src directory to the container
-  #     - ./site.conf:/etc/nginx/conf.d/default.conf  # Mount the Nginx config
-  #     # - ./ssl:/etc/nginx/ssl  # Mount the SSL folder to provide certs
-  #     # - ng1:/templates:/etc/nginx/templates
-  #     # - ng2:/var/www/html/  # Mount the local src directory to the container
-  #     # - ng3:/etc/nginx/conf.d/  # Mount the Nginx config
-  #     # - ng4:/etc/nginx/ssl/  # Mount the SSL folder to provide certs
   mysql:
-    container_name: some-mysql
+    container_name: prestadb
     image: mariadb:lts
     restart: unless-stopped
     env_file:
       - $DB_PRESTA
     networks:
-      - prestashop
-    ports:
-      - 3307:3306
+      - prestashop_dev
+    # ports:
+    #   - 3307:3306
     volumes:
-      - dbdata:/var/lib/mysql
+      - dbdata_dev:/var/lib/mysql
   prestashop:
-    container_name: prestashop
+    container_name: prestatest
     image: prestashop/prestashop:latest # Latest stable version of the PrestaShop, to see all available images go to ...
     restart: unless-stopped
     depends_on:
@@ -41,9 +23,9 @@ services:
     env_file:
       - $PRESTA_VAR
     networks:
-      - prestashop
+      - prestashop_dev
   api_key:
-    container_name: api_manager
+    container_name: api_manager_dev
     build: ../Gestion_API
     # image: api_presta
     restart: unless-stopped
@@ -54,13 +36,8 @@ services:
     env_file:
       - $PRESTA_KEY_MNG
     networks:
-      - prestashop
+      - prestashop_dev
 networks:
-    prestashop:
+    prestashop_dev:
 volumes:
-  ng1:
-  ng2:
-  ng3:
-  ng4:
-  psdata:
-  dbdata:
+  dbdata_dev:
