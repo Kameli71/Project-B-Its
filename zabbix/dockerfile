@@ -1,0 +1,12 @@
+# Utilisez l'image officielle de Zabbix Server avec support MySQL
+FROM zabbix/zabbix-server-mysql:latest
+
+# Copiez les fichiers de configuration personnalisés dans le conteneur
+COPY config/zabbix_server.conf /etc/zabbix/
+COPY config/zabbix_agentd.conf /etc/zabbix/
+
+# Exposez le port 10051 pour permettre les connexions au serveur Zabbix
+EXPOSE 10051
+
+# Définissez la commande par défaut pour exécuter le serveur Zabbix
+CMD ["zabbix_server", "-c", "/etc/zabbix/zabbix_server.conf"]

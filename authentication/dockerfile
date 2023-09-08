@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Exposez le port sur lequel le microservice s'exécutera
-EXPOSE 5000
+EXPOSE 5010
 
 # Commande pour exécuter l'application
-CMD ["python", "app.py"]
+ENTRYPOINT [ "flask", "run" ]

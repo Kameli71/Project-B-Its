@@ -1,7 +1,11 @@
+authentication/venvAuth/
+products/venvPro/
+reviews/venvRev/
 prestashop/db.env
 prestashop/presta.env
 microservices/venv/*
 *pycache__/
+/.pytest_cache/
 *.env
 __pycache__/
 *.pyc
@@ -38,3 +42,38 @@ migrations/
 venv/
 
 # Autres fichiers et dossiers à ignorer (ajoutez ici tout autre fichier/dossier que vous ne voulez pas suivre)
+
+
+# Ignorer les fichiers et dossiers spécifiques à Python
+__pycache__/            # Dossier contenant les fichiers bytecode Python, générés à l'exécution
+*.pyc                   # Fichiers bytecode Python, générés à l'exécution
+*.pyo                   # Fichiers bytecode Python optimisés
+*.pyd                   # Fichiers de bibliothèque dynamique Python (Windows)
+.Python                 # Fichier spécifique à Python (environnement virtuel)
+
+# Ignorer les fichiers et dossiers spécifiques aux environnements virtuels
+venv/                   # Dossier d'environnement virtuel (peut aussi être nommé env, .env, etc.)
+*.venv                  # Fichier spécifique à l'environnement virtuel
+ENV/                    # Autre dossier d'environnement virtuel
+
+# Ignorer les fichiers de base de données (à adapter en fonction de votre base de données)
+instance/               # Dossier contenant les fichiers de base de données
+*.db                    # Fichiers de base de données SQLite
+
+# Ignorer les fichiers et dossiers spécifiques aux tests
+.coverage               # Fichier généré par coverage.py lors de l'exécution des tests
+htmlcov/                # Dossier généré par coverage.py pour les rapports de couverture
+
+# Ignorer les fichiers et dossiers spécifiques aux systèmes d'exploitation
+.DS_Store              # Fichier généré par macOS pour stocker des métadonnées de dossier personnalisées
+Thumbs.db               # Fichier généré par Windows pour stocker des miniatures d'images
+
+# Ignorer les fichiers et dossiers spécifiques aux éditeurs de texte
+.idea/                  # Dossier généré par PyCharm et d'autres IDE JetBrains
+.vscode/               # Dossier généré par Visual Studio Code
+
+# Autres fichiers et dossiers à ignorer (à adapter en fonction de votre projet)
+docker-compose.override.yml   # Fichier d'override Docker Compose, généralement utilisé pour des configurations locales spécifiques
+*.swp                  # Fichiers temporaires générés par Vim
+*.swo                  # Fichiers temporaires générés par Vim
+*.bak                  # Fichiers de sauvegarde

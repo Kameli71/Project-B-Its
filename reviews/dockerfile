@@ -20,6 +20,6 @@ COPY . .
 EXPOSE 5002
 
 # Commande pour exécuter l'application
-CMD ["python", "app.py"]
-ENTRYPOINT [ "./endpoint.sh" ]
+ENTRYPOINT [ "flask", "run" ]
+#ENTRYPOINT [ "./entrypoint.sh" ]
 
