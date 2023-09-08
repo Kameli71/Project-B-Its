@@ -28,7 +28,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Cette étape peut inclure la construction de votre application, par exemple, en utilisant un script ou une commande
-                sh 'cd ./microA/app/ && docker-compose up -d'
+                sh 'cd ./microA/app/ && docker compose up -d'
                 echo 'Installation de Prestashop & Installation Micro-Services'
             }
         }
@@ -51,7 +51,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
-                sh 'docker-compose up -d'
+                
             }
         }
     }
