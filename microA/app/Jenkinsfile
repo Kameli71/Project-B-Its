@@ -19,7 +19,7 @@ pipeline {
                         branches: [[name: 'nasim']], // Spécifiez la branche souhaitée
                         doGenerateSubmoduleConfigurations: false,
                         extensions: [[$class: 'CleanBeforeCheckout'], [$class: 'RelativeTargetDirectory', relativeTargetDir: '']], 
-                        userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/Projetits/Project-B-Its.git']]]
+                        userRemoteConfigs: [[url: 'https://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@github.com/Projetits/Project-B-Its.git']]]
                 )
                 echo 'Code source récupéré depuis GitHub.'
             }
