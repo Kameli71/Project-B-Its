@@ -28,7 +28,7 @@ pipeline {
                     echo "Clonage du repo en cour..."
                     checkout scmGit(branches: [[name: '*/dev_jo_compose']],
                      extensions: [],
-                     userRemoteConfigs: [[url: 'https://$PRESTA_PAT_DEV@github.com/Projetits/Project-B-Its.git']]
+                     userRemoteConfigs: [[url: 'https://'$PRESTA_PAT_DEV'@github.com/Projetits/Project-B-Its.git']]
                      )
                     // sh "cd Project-B-Its"
                     sh('pwd && ls -la')
