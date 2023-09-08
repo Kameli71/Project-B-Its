@@ -26,13 +26,13 @@ pipeline {
                 echo "Clonage du repo en cour..."
                 checkout scmGit(branches: [[name: '*/dev_jo_compose']],
                  extensions: [],
-                 userRemoteConfigs: [[url: 'https://'+$PRESTA_PAT_DEV+'@github.com/Projetits/Project-B-Its.git']]
+                 userRemoteConfigs: [[url: 'https://'+${PRESTA_PAT_DEV}+'@github.com/Projetits/Project-B-Its.git']]
                  )
                 // sh "cd Project-B-Its"
                 sh('pwd && ls -la')
-                sh('cp $PRESTA_DB_DEV ./prestashop/')
-                sh('cp $PRESTA_MAIN_DEV ./prestashop/')
-                sh('cp $PRESTA_API_KEY_DEV ./prestashop/')
+                sh('cp ${PRESTA_DB_DEV} ./prestashop/')
+                sh('cp ${PRESTA_MAIN_DEV} ./prestashop/')
+                sh('cp ${PRESTA_API_KEY_DEV} ./prestashop/')
             }
         }
         stage('Build') {
