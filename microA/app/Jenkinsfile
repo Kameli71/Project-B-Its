@@ -39,12 +39,8 @@ pipeline {
             steps {
                 dir ('./microA/app'){
                     script {
-                    // Assurez-vous que Python est installé sur le système
-                    def pythonHome = tool name: 'Python', type: 'Tool'
-                    def pythonExec = "${pythonHome}/bin/python"
-                    
                     // Exécutez les tests unitaires
-                    sh "${pythonExec} -m unittest discover -s ./microA/app/ -p 'test_app_*.py'"
+                    sh 'python -m unittest -v test_app.py'
                     }
                 }
             }
