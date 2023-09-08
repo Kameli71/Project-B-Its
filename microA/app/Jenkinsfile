@@ -40,12 +40,11 @@ pipeline {
                 dir ('./microA/app'){
                     script {
                         // Installer pytest si ce n'est pas déjà fait
-                        // sh 'pip install pytest'
-                        sh 'sudo apt-get install python3-pytest -y'
+                        sh 'docker exec -i my-microservice python -m pytest test_app.py'
                         // Exécute les tests de l'application
-                        sh 'pytest'
+                        // sh 'pytest'
                         // sortie des tests
-                        sh 'pytest test_app.py'
+                        // sh 'pytest test_app.py'
                     }
                 }
             }
