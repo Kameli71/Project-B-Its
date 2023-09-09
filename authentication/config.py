@@ -2,8 +2,12 @@ import os
 from dotenv import load_dotenv
 import logging
 
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
+
 # Configuration des logs
-logging.basicConfig(filename='app.log', level=logging.INFO)
+logging.basicConfig(filename='logs/app.log', level=logging.INFO)
 
 # Chargez les variables d'environnement du fichier .env
 load_dotenv()

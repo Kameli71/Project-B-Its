@@ -12,6 +12,8 @@ RUN pip install --upgrade pip
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN mkdir /app/logs
+RUN chmod 777 /app/logs
 # Copiez le reste du code dans le conteneur
 COPY . .
 
