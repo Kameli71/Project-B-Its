@@ -1,22 +1,37 @@
-#!/usr/bin/env groovy
-
 pipeline {
-    agent any
+    agent any 
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building..'
+                checkout scm 
             }
         }
-        stage('Test') {
+        
+        stage('Build and Test Authentication Service') {
             steps {
-                echo 'Testing..'
+                sh 'cd authentication && docker build -t auth_service .'
+                sh 'cd authentication/tests && pytest'
             }
         }
-        stage('Deploy') {
+        
+        stage('Build and Test Products Service') {
             steps {
-                echo 'Deploying....'
+                sh 'cd products && docker build -t products_service .'
+                sh 'cd products/tests && pytest'
+            }
+        }
+        
+        stage('Build and Test Reviews Service') {
+            steps {
+                sh 'cd reviews && docker build -t reviews_service .'
+                sh 'cd reviews/tests && pytest'
+            }
+        }
+
+        stage('Deployment') {
+            steps {
+                sh 'docker-compose up -d'
             }
         }
     }
