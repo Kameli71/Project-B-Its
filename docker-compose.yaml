@@ -1,219 +1,204 @@
 version: '3.8'
 
 services:
-  # Service d'authentification
   authentication:
     build: 
-      context: ./authentication  # Chemin vers le dossier contenant le Dockerfile et les fichiers source pour le service d'authentification
-      dockerfile: dockerfile
+      context: ./authentication
+      dockerfile: Dockerfile
     ports:
-      - "5010:5010"  # Mappage des ports pour le service d'authentification
+      - "5000:5000"
     networks:
-      - prestashop-network  # Réseau utilisé par le service
-    environment:
-      # Variables d'environnement pour le service d'authentification
-      - DATABASE_URL=${DATABASE_URL}
-      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI}
-      - SECRET_KEY=${SECRET_KEY}
-      - JWT_ALGORITHM=${JWT_ALGORITHM}
-      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - JWT_ACCESS_TOKEN_EXPIRE_MINUTES=${JWT_ACCESS_TOKEN_EXPIRE_MINUTES}
-      - JWT_REFRESH_TOKEN_EXPIRE_MINUTES=${JWT_REFRESH_TOKEN_EXPIRE_MINUTES}
-      - JWT_ISSUER=${JWT_ISSUER}
-      - JWT_AUDIENCE=${JWT_AUDIENCE}
-      - JWT_PRIVATE_KEY=${JWT_PRIVATE_KEY}
-      - JWT_PUBLIC_KEY=${JWT_PUBLIC_KEY}
+      - prestashop-network
+    env_file: .env
     secrets:
       - db_password
     depends_on:
       - db
     volumes:
-      - ./logs/authentication:/app/logs
-      #- authentication-logs:/var/log/authentication  # Volume de logs pour le service d'authentification
+      - ./logs/authentication:/app/logs  # Montage du volume pour les logs d'authentification
     restart: unless-stopped
 
-  # Service des produits
-  products:
-    build: 
-      context: ./products  # Chemin vers le dossier contenant le Dockerfile et les fichiers source pour le service des produits
-      dockerfile: dockerfile
-    ports:
-      - "5001:5001"  # Mappage des ports pour le service des produits
-    networks:
-      - prestashop-network  # Réseau utilisé par le service
-    environment:
-      # Variables d'environnement pour le service des produits
-      - DATABASE_URL=${DATABASE_URL}
-      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI} 
-    depends_on:
-      - db
-    volumes:
-      - products-logs:/var/log/products  # Volume de logs pour le service des produits
-    restart: unless-stopped
+  # products:
+  #   build: 
+  #     context: ./products
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5001:5001"
+  #   networks:
+  #     - prestashop-network
+  #   environment:
+  #     DATABASE_URL: ${DATABASE_URL}
+  #     SQLALCHEMY_DATABASE_URI: ${SQLALCHEMY_DATABASE_URI}
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - products-logs:/var/log/products  # Montage du volume pour les logs de produits
+  #   restart: unless-stopped
 
-  # Service des avis
-  reviews:
-    build: 
-      context: ./reviews  # Chemin vers le dossier contenant le Dockerfile et les fichiers source pour le service des avis
-      dockerfile: dockerfile
-    ports:
-      - "5002:5002"  # Mappage des ports pour le service des avis
-    networks:
-      - prestashop-network  # Réseau utilisé par le service
-    environment:
-      # Variables d'environnement pour le service des avis
-      - DATABASE_URL=${DATABASE_URL}
-      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI}
-    depends_on:
-      - db
-    volumes:
-      - reviews-logs:/var/log/reviews  # Volume de logs pour le service des avis
-    restart: unless-stopped
+  # reviews:
+  #   build: 
+  #     context: ./reviews
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5002:5002"
+  #   networks:
+  #     - prestashop-network
+  #   environment:
+  #     DATABASE_URL: ${DATABASE_URL}
+  #     SQLALCHEMY_DATABASE_URI: ${SQLALCHEMY_DATABASE_URI}
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - reviews-logs:/var/log/reviews  # Montage du volume pour les logs de revues
+  #   restart: unless-stopped
 
-  # Service de base de données
   db:
-    image: mariadb:10.5  # Image Docker pour le service de base de données
-    environment:
-      # Variables d'environnement pour le service de base de données
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-    secrets:
-      - db_password
-      - mysql_root_password
+    image: mariadb:10.5
+    # healthcheck:
+    #   test: ["CMD", "mysqladmin", "ping", "-uroot", "-p$${MYSQL_ROOT_PASSWORD}"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    env_file: db.env
+      # MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      # MYSQL_DATABASE: ${MYSQL_DATABASE}
+      # MYSQL_USER: ${MYSQL_USER}
+      # MYSQL_PASSWORD_FILE: /run/secrets/db_password
+    # secrets:
+    #   - db_password
+    #   - mysql_root_password
     networks:
-      - prestashop-network  # Réseau utilisé par le service
+      - prestashop-network
     volumes:
-      - db-data:/var/lib/mysql  # Volume pour conserver les données de la base de données
+      - db-data:/var/lib/mysql  # Montage du volume pour les données de la base de données
+    # command: 
+    #   - bash
+    #   - "-c"
+    #   - |
+    #     set -e
+    #     (echo "CREATE DATABASE IF NOT EXISTS prestashop_db; CREATE USER IF NOT EXISTS 'user123'@'%' IDENTIFIED BY 'pass123'; GRANT ALL PRIVILEGES ON prestashop_db.* TO 'user123'@'%'; FLUSH PRIVILEGES;" | mysql -uroot -p"$$MYSQL_ROOT_PASSWORD") &
+    #     docker-entrypoint.sh mysqld
     restart: unless-stopped
 
-  # API Prestashop
-  prestashop-api:
-    image: prestashop/prestashop:latest  # Image Docker pour l'API Prestashop
-    ports:
-      - "80:80"  # Mappage des ports pour l'API Prestashop
-    networks:
-      - prestashop-network  # Réseau utilisé par le service
-    environment:
-      # Variables d'environnement pour l'API Prestashop
-      - DB_SERVER=db
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${MYSQL_USER}
-      - DB_PASSWD=${MYSQL_PASSWORD}
-      - PS_FOLDER_ADMIN=${PS_FOLDER_ADMIN}
-      - PS_FOLDER_INSTALL=${PS_FOLDER_INSTALL}
-      - PS_INSTALL_AUTO=${PS_INSTALL_AUTO}
-      - PS_DOMAIN=${PS_DOMAIN}
-      - ADMIN_MAIL=${ADMIN_MAIL}
-      - ADMIN_PASSWD=${ADMIN_PASSWD}
-    depends_on:
-      - db
-    volumes:
-      - prestashop-logs:/var/log/prestashop  # Volume de logs pour l'API Prestashop
-    restart: unless-stopped
+  # prestashop-api:
+  #   image: prestashop/prestashop:latest
+  #   ports:
+  #     - "80:80"
+  #   networks:
+  #     - prestashop-network
+  #   environment:
+  #     DB_SERVER: db
+  #     DB_NAME: ${DB_NAME}
+  #     DB_USER: ${MYSQL_USER}
+  #     DB_PASSWD_FILE: /run/secrets/db_password
+  #     PS_FOLDER_ADMIN: ${PS_FOLDER_ADMIN}
+  #     PS_FOLDER_INSTALL: ${PS_FOLDER_INSTALL}
+  #     PS_INSTALL_AUTO: ${PS_INSTALL_AUTO}
+  #     PS_DOMAIN: ${PS_DOMAIN}
+  #     ADMIN_MAIL: ${ADMIN_MAIL}
+  #     ADMIN_PASSWD: ${ADMIN_PASSWD}
+  #   secrets:
+  #     - db_password
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - prestashop-logs:/var/log/prestashop  # Montage du volume pour les logs de PrestaShop
+  #   restart: unless-stopped
 
-  # Interface Web Zabbix
-  zabbix-web:
-    image: zabbix/zabbix-web-apache-mysql:latest  # Image Docker pour l'interface web Zabbix avec Apache
-    ports:
-      - "8081:80"  # Mappage des ports pour l'interface web Zabbix
-    networks:
-      - prestashop-network  # Réseau utilisé par le service
-    environment:
-      # Variables d'environnement pour l'interface web Zabbix
-      - DB_SERVER_HOST=db
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - ZBX_SERVER_HOST=zabbix-server
-    depends_on:
-      - zabbix-server  # Dépendance sur le serveur Zabbix
-    command: 
-    - /bin/bash
-    - -c
-    - |
-      echo "ServerName localhost" >> /etc/httpd/conf/httpd.conf
-      exec /usr/sbin/httpd -D FOREGROUND
-    volumes:
-      - zabbix-web-logs:/var/log/zabbix  # Volume de logs pour l'interface web Zabbix
-    restart: unless-stopped  # Politique de redémarrage
+  # zabbix-web:
+  #   depends_on:
+  #     - db
+  #     - zabbix-server
+  #   image: zabbix/zabbix-web-apache-mysql:latest
+  #   user: root
+  #   ports:
+  #     - "8081:80"
+  #   networks:
+  #     - prestashop-network
+  #   environment:
+  #     DB_SERVER_HOST: db
+  #     MYSQL_DATABASE: zabbix
+  #     MYSQL_USER: ${MYSQL_USER}
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #     ZBX_SERVER_HOST: zabbix-server
+  #   command: 
+  #     - /bin/bash
+  #     - -c
+  #     - |
+  #       if [ ! -d /etc/httpd/conf ]; then
+  #         mkdir -p /etc/httpd/conf
+  #       fi
+  #       if [ ! -f /etc/httpd/conf/httpd.conf ]; then
+  #         echo "ServerName localhost" > /etc/httpd/conf/httpd.conf
+  #       fi
+  #       exec /usr/sbin/httpd -D FOREGROUND
+  #   volumes:
+  #     - zabbix-web-logs:/var/log/zabbix  # Montage du volume pour les logs de Zabbix Web
+  #   restart: unless-stopped
 
-  # Serveur Zabbix
-  zabbix-server:
-    image: zabbix/zabbix-server-mysql:latest  # Image Docker pour le serveur Zabbix
-    user: root
-    ports:
-      - "10051:10051"  # Mappage des ports pour le serveur Zabbix
-    networks:
-      - prestashop-network  # Réseau utilisé par le service
-    environment:
-      # Variables d'environnement pour le serveur Zabbix
-      - DB_SERVER_HOST=db
-      - MYSQL_DATABASE=zabbix
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD_FILE=${MYSQL_ROOT_PASSWORD_FILE}
-    secrets:
-      - db_password
-    volumes:
-      - ./zabbix/config/zabbix_server.conf:/etc/zabbix/zabbix_server.conf
-      - zabbix-server-logs:/var/log/zabbix  # Volume de logs pour le serveur Zabbix
-    depends_on:
-      - db
-    command: > 
-      bash -c "
-      mkdir -m 777 -p /var/log/zabbix && 
-      mkdir -m 777 -p /var/run/zabbix && 
-      chown -R zabbix:zabbix /var/log/zabbix && 
-      chown -R zabbix:zabbix /var/run/zabbix && 
-      exec /usr/sbin/zabbix_server -f -c /etc/zabbix/zabbix_server.conf
-      "
-    restart: unless-stopped
+  # zabbix-server:
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   image: zabbix/zabbix-server-mysql:latest
+  #   user: root
+  #   ports:
+  #     - "10051:10051"
+  #   networks:
+  #     - prestashop-network
+  #   environment:
+  #     DB_SERVER_HOST: db
+  #     MYSQL_DATABASE: zabbix
+  #     MYSQL_USER: user123
+  #     MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  #   volumes:
+  #     - ./zabbix/config/zabbix_server.conf:/etc/zabbix/zabbix_server.conf  # Montage du volume pour le fichier de configuration du serveur Zabbix
+  #     - zabbix-server-logs:/var/log/zabbix  # Montage du volume pour les logs du serveur Zabbix
+  #   command: > 
+  #     bash -c "
+  #     mkdir -m 777 -p /var/log/zabbix && 
+  #     mkdir -m 777 -p /var/run/zabbix && 
+  #     chown -R zabbix:zabbix /var/log/zabbix && 
+  #     chown -R zabbix:zabbix /var/run/zabbix && 
+  #     exec /usr/sbin/zabbix_server -f -c /etc/zabbix/zabbix_server.conf
+  #     "
+  #   restart: unless-stopped
 
-  # Agent Zabbix
-  zabbix-agent:
-    image: zabbix/zabbix-agent:latest  # Image Docker pour l'agent Zabbix
-    user: root
-    networks:
-      - prestashop-network  # Réseau utilisé par le service
-    environment:
-      # Variables d'environnement pour l'agent Zabbix
-      - ZBX_HOSTNAME=zabbix-agent
-      - ZBX_SERVER_HOST=zabbix-server
-    volumes:
-      - ./zabbix/config/zabbix_agentd.conf:/etc/zabbix/zabbix_agentd.conf
-      - zabbix-agent-logs:/var/log/zabbix  # Volume de logs pour l'agent Zabbix
-    links:
-      - zabbix-server
-    depends_on:
-      - zabbix-server
-    command: > 
-      bash -c "
-      mkdir -m 777 -p /var/log/zabbix && 
-      chown -R zabbix:zabbix /var/log/zabbix && 
-      mkdir -m 777 -p /var/run/zabbix && 
-      chown -R zabbix:zabbix /var/run/zabbix && 
-      exec /usr/sbin/zabbix_agentd -f 
-      "
-    restart: unless-stopped
+  # zabbix-agent:
+  #   image: zabbix/zabbix-agent:latest
+  #   user: root
+  #   networks:
+  #     - prestashop-network
+  #   environment:
+  #     ZBX_SERVER_HOST: zabbix-server
+  #     ZBX_HOSTNAME: zabbix-agent
+  #   volumes:
+  #     - zabbix-agent-logs:/var/log/zabbix  # Montage du volume pour les logs de l'agent Zabbix
+  #   command: > 
+  #     bash -c "
+  #     mkdir -m 777 -p /var/log/zabbix && 
+  #     mkdir -m 777 -p /var/run/zabbix && 
+  #     chown -R zabbix:zabbix /var/log/zabbix && 
+  #     chown -R zabbix:zabbix /var/run/zabbix && 
+  #     exec /usr/sbin/zabbix_agentd -f
+  #     "
+  #   restart: unless-stopped
 
 networks:
   prestashop-network:
-    driver: bridge  # Driver de réseau utilisé
+    driver: bridge
 
 volumes:
-  db-data:  # Volume pour les données de la base de données
-  authentication-logs:  # Volume pour les logs du service d'authentification
-  products-logs:  # Volume pour les logs du service des produits
-  reviews-logs:  # Volume pour les logs du service des avis
-  prestashop-logs:  # Volume pour les logs de l'API Prestashop
-  zabbix-web-logs:  # Volume pour les logs de l'interface web Zabbix
-  zabbix-server-logs:  # Volume pour les logs du serveur Zabbix
-  zabbix-agent-logs:  # Volume pour les logs de l'agent Zabbix
+  db-data:
+  products-logs:
+  reviews-logs:
+  prestashop-logs:
+  zabbix-web-logs:
+  zabbix-server-logs:
+  zabbix-agent-logs:
 
 secrets:
-  mysql_root_password:  # Secret pour le mot de passe root de MySQL
-    file: ./db_password.secret
-  db_password:  # Secret pour le mot de passe de la base de données
-    file: ./db_password.secret
+  db_password:
+    file: ./secrets/db_password.txt
+  mysql_root_password:
+    file: ./secrets/mysql_root_password.txt
