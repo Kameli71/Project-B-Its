@@ -52,6 +52,8 @@ pipeline {
                 sh ('ls -la')
                 sh "cd ./prestashop/ && docker compose up -d"
                 echo 'Installation de prestashop'
+                sh "docker exec -i prestashop-nginx-1 sed -i -e 's/stream http:\/\/localhost:80/stream http:\/\/ultralout.re:8080/g' -e 's/localhost/ultralout.re/g' -e 's/redirect off/redirect on/' /etc/nginx/conf.d/default.conf"
+                sh "docker exec -i prestashop-nginx-1 nginx -s reload"
             }
         }
 
