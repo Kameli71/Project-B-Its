@@ -1,11 +1,29 @@
 version: '3'
 services:
+  nginx:  # Nginx web server
+    image: owasp/modsecurity-crs:nginx  # Latest Nginx Server Image
+    restart: unless-stopped
+    depends_on:
+      - prestashop
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - prestashop_dev
+    volumes:
+    #   - ./src:/var/www/html  # Mount the local src directory to the container
+      - ./site.conf:/etc/nginx/conf.d/default.conf  # Mount the Nginx config
+      # - ./ssl:/etc/nginx/ssl  # Mount the SSL folder to provide certs
+      # - ng1:/templates:/etc/nginx/templates
+      # - ng2:/var/www/html/  # Mount the local src directory to the container
+      # - ng3:/etc/nginx/conf.d/  # Mount the Nginx config
+      # - ng4:/etc/nginx/ssl/  # Mount the SSL folder to provide certs
   mysql:
     container_name: prestadb
     image: mariadb:lts
     restart: unless-stopped
     env_file:
-      - $PRESTA_DB_DEV
+      - db.env
     networks:
       - prestashop_dev
     volumes:
@@ -17,9 +35,9 @@ services:
     depends_on:
       - mysql
     ports:
-      - 18080:80
+      - 8080:80
     env_file:
-      - $PRESTA_MAIN_DEV
+      - presta.env
     networks:
       - prestashop_dev
   api_key:
@@ -32,7 +50,7 @@ services:
     ports:
       - 5252:5051
     env_file:
-      - $PRESTA_API_KEY_DEV
+      - ../Gestion_API/.env
     networks:
       - prestashop_dev
 networks:
