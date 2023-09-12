@@ -35,25 +35,25 @@ pipeline {
             }
         }
 
-        // stage('Test') {
-        //     steps {
-        //         dir ('./microA/app'){
-        //             script {
-        //             // Exécutez les tests unitaires
-        //             // sh '/usr/bin/python3 -m unittest -v test_app.py'
-        //             // sh '/usr/local/bin/python3 -m unittest -v test_app.py'
-        //             sh "docker exec -i my-microservice python -m unittest tests.test_app"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                dir ('./microA/app'){
+                    script {
+                    // Exécutez les tests unitaires
+                    // sh '/usr/bin/python3 -m unittest -v test_app.py'
+                    // sh '/usr/local/bin/python3 -m unittest -v test_app.py'
+                    sh "docker exec -i my-microservice python -m unittest tests.test_app"
+                    }
+                }
+            }
+        }
 
-        // stage('Deploy') {
-        //     steps {
-        //         // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
+        stage('Deploy') {
+            steps {
+                // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
                 
-        //     }
-        // }
+            }
+        }
     }
 
     post {
