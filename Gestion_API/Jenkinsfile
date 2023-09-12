@@ -5,6 +5,7 @@ pipeline {
         PRESTA_MAIN_DEV = credentials('PRESTA_MAIN_DEV')
         PRESTA_API_KEY_DEV = credentials('PRESTA_API_KEY_DEV')
         PRESTA_PAT_DEV = credentials('PRESTA_PAT_DEV')
+        SSL_CONF = credentials('SSL_CONF')
     }
     stages {
 
@@ -41,6 +42,7 @@ pipeline {
                 sh('cp $PRESTA_DB_DEV ./prestashop/')
                 sh('cp $PRESTA_MAIN_DEV ./prestashop/')
                 sh('cp $PRESTA_API_KEY_DEV ./prestashop/')
+                sh('cp $SSL_CONF ./prestashop/')
                 // }
             }
         }
