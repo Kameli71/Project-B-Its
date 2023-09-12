@@ -32,7 +32,7 @@ pipeline {
     //             withCredentials([file(credentialsId: 'PRESTA_MAIN_DEV', variable: 'PRESTA_MAIN_DEV'), file(credentialsId: 'PRESTA_DB_DEV', variable: 'PRESTA_DB_DEV'), file(credentialsId: 'PRESTA_API_KEY_DEV', variable: 'PRESTA_API_KEY_DEV'), string(credentialsId: 'PRESTA_PAT_DEV', variable: 'PRESTA_PAT_DEV')]) {
     // // some block
                 echo "Clonage du repo en cour..."
-                checkout scmGit(branches: [[name: '*/dev_jo_compose']],
+                checkout scmGit(branches: [[name: '*/micro-join']],
                  extensions: [],
                  userRemoteConfigs: [[url: "https://$PRESTA_PAT_DEV@github.com/Projetits/Project-B-Its.git"]]
                  )
