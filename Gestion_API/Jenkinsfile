@@ -56,8 +56,8 @@ pipeline {
         stage('Test_clean') {
             steps {
                 sh "docker exec -i api_manager_dev python -m pytest ./tests"
-                sh "docker container stop prestadb prestatest api_manager_dev"
-                sh "docker container prune -f"
+                // sh "docker container stop prestadb prestatest api_manager_dev"
+                // sh "docker container prune -f"
             }
         }
     }
