@@ -6,7 +6,7 @@ services:
     depends_on:
       - prestashop
     ports:
-      - 70:70
+      - 80:80
       - 443:443
     networks:
       - prestashop_dev
