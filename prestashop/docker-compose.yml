@@ -8,6 +8,10 @@ services:
     ports:
       - 80:80
       - 443:443
+    environment:
+      - DNS_SERVER=ultralout.re
+      - NGINX_ALWAYS_TLS_REDIRECT=on
+      - SET_REAL_IP_FROM=45.167.136
     networks:
       - prestashop_dev
     # volumes:
