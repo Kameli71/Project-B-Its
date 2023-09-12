@@ -1,6 +1,7 @@
 authentication/venvAuth/
 products/venvPro/
 reviews/venvRev/
+
 prestashop/db.env
 prestashop/presta.env
 microservices/venv/*
@@ -27,9 +28,7 @@ db_password.secret
 # Dossiers de base de données
 instance/
 
-# Fichiers compilés et caches
-__pycache__/
-*.pyc
+
 
 # Dossiers de tests
 */tests/
@@ -38,8 +37,7 @@ __pycache__/
 # Fichiers de migrations
 migrations/
 
-# Fichiers et dossiers spécifiques à l'environnement virtuel (venv)
-venv/
+
 
 # Autres fichiers et dossiers à ignorer (ajoutez ici tout autre fichier/dossier que vous ne voulez pas suivre)
 
@@ -77,3 +75,7 @@ docker-compose.override.yml   # Fichier d'override Docker Compose, généralemen
 *.swp                  # Fichiers temporaires générés par Vim
 *.swo                  # Fichiers temporaires générés par Vim
 *.bak                  # Fichiers de sauvegarde
+=======
+*.env
+remote_creds/
+
