@@ -39,7 +39,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - 7070:70
+      - 8080:80
     env_file:
       - $PRESTA_MAIN_DEV
     networks:
