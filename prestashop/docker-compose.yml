@@ -14,9 +14,9 @@ services:
     #   - SET_REAL_IP_FROM=45.167.136
     networks:
       - prestashop_dev
-    volumes:
+    # volumes:
     #   - ./src:/var/www/html  # Mount the local src directory to the container
-      - ./$SSL_CONF:/etc/nginx/conf.d/default.conf  # Mount the Nginx config
+      # - ./$SSL_CONF:/etc/nginx/conf.d/default.conf  # Mount the Nginx config
       # - ./ssl:/etc/nginx/ssl  # Mount the SSL folder to provide certs
       # - ng1:/templates:/etc/nginx/templates
       # - ng2:/var/www/html/  # Mount the local src directory to the container
