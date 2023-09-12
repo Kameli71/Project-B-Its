@@ -3,4 +3,5 @@ prestashop/presta.env
 microservices/venv/*
 *pycache__/
 *.env
+venv/
 remote_creds/

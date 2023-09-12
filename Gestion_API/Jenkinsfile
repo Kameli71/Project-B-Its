@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clean') {
+            steps {
+                cleanWs()
+                // in groovy
+                // echo "${env.WORKSPACE}"
+                //in shell
+                // sh 'echo $WORKSPACE'
+                // in groovy script 
+                // script {
+                //     print env.WORKSPACE
+                // }
+            }
+        }
+        stage('clone') {
+            
+            environment {
+                DB_PRESTA = credentials('DB_PRESTA')
+                PRESTA_VAR = credentials('PRESTA_VAR')
+                PRESTA_KEY_MNG = credentials('PRESTA_KEY_MNG')
+            }
+            steps {
+                // sh "git clone https://github.com/Projetits/Project-B-Its.git"
+                // sh "cd Project-B-Its"
+                // sh "git checkout gestion_api"
+                checkout scmGit(branches: [[name: '*/gestion_api']],
+                 extensions: [],
+                 userRemoteConfigs: [[url: 'https://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@github.com/Projetits/Project-B-Its.git']]
+                 )
+                // sh "cd Project-B-Its"
+                sh('pwd && ls -la')
+                sh('cp $DB_PRESTA ./prestashop/')
+                sh('cp $PRESTA_VAR ./prestashop/')
+                sh('cp $PRESTA_KEY_MNG ./prestashop/')
+                echo "Clonage du repo en cour..."
+            }
+        }
+        stage('Build') {
+
+            environment {
+                DB_PRESTA = credentials('DB_PRESTA')
+                PRESTA_VAR = credentials('PRESTA_VAR')
+                PRESTA_KEY_MNG = credentials('PRESTA_KEY_MNG')
+            }
+            steps {
+                sh ('ls -la')
+                sh "cd ./prestashop/ && docker compose up -d"
+                echo 'Installation de prestashop'
+            }
+        }
+
+        stage('Test_clean') {
+            steps {
+                sh "docker exec -i api_manager python -m pytest ./tests"
+                sh "docker container stop some-mysql prestashop api_manager"
+                sh "docker container prune -f"
+            }
+        }
+    }
+}
+   
