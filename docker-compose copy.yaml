@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  authentication:
+    build: 
+      context: ./authentication  # Contexte de construction, pointant vers le dossier contenant le Dockerfile d'authentification
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  # Mappage des ports (port hôte : port conteneur)
+    networks:
+      - prestashop-network  # Réseau sur lequel le service sera connecté
+    env_file: .env  # Fichier contenant les variables d'environnement
+    secrets:
+      - db_password  # Secret utilisé pour stocker le mot de passe de la base de données
+    depends_on:
+      - db  # Dépendance sur le service db, garantissant que db sera démarré avant ce service
+    volumes:
+      - ./logs/authentication:/app/logs  # Montage du volume pour les logs d'authentification
+    restart: unless-stopped  # Politique de redémarrage du service
+
+  # Les sections suivantes (products, reviews, etc.) sont actuellement commentées.
+  # Vous pouvez les décommenter et les configurer comme le service d'authentification ci-dessus en fonction de vos besoins.
+
+  db:
+    image: mariadb:10.5  # Image Docker à utiliser pour le service db
+    env_file: db.env  # Fichier contenant les variables d'environnement spécifiques au service db
+    networks:
+      - prestashop-network  # Réseau sur lequel le service sera connecté
+    volumes:
+      - db-data:/var/lib/mysql  # Montage du volume pour stocker les données de la base de données
+    restart: unless-stopped  # Politique de redémarrage du service
+
+networks:
+  prestashop-network:
+    driver: bridge  # Utilisation du driver bridge pour créer un réseau isolé
+
+volumes:
+  db-data:  # Déclaration du volume db-data
+  products-logs:  # Déclaration du volume products-logs
+  reviews-logs:  # Déclaration du volume reviews-logs
+  prestashop-logs:  # Déclaration du volume prestashop-logs
+  zabbix-web-logs:  # Déclaration du volume zabbix-web-logs
+  zabbix-server-logs:  # Déclaration du volume zabbix-server-logs
+  zabbix-agent-logs:  # Déclaration du volume zabbix-agent-logs
+
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt  # Chemin vers le fichier contenant le secret db_password
+  mysql_root_password:
+    file: ./secrets/mysql_root_password.txt  # Chemin vers le fichier contenant le secret mysql_root_password
