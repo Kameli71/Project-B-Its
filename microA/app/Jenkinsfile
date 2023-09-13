@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    environment {
-        DB_ENV = credentials('DB_PRESTA')
-        PRESTA_ENV = credentials('PRESTA_VAR')
-    }
+    // environment {
+    //     DB_ENV = credentials('DB_PRESTA')
+    //     PRESTA_ENV = credentials('PRESTA_VAR')
+    // }
     stages {
         stage('Clean') {
             steps {
@@ -28,8 +28,8 @@ pipeline {
         stage('Build') {
             steps {
                 // Cette étape peut inclure la construction de votre application, par exemple, en utilisant un script ou une commande
-                sh ('cp $DB_ENV ./microA/app/')
-                sh ('cp $PRESTA_ENV ./microA/app/')
+                // sh ('cp $DB_ENV ./microA/app/')
+                // sh ('cp $PRESTA_ENV ./microA/app/')
                 sh 'cd ./microA/app/ && docker compose up -d'
                 echo 'Installation de Prestashop & Installation Micro-Services'
             }
