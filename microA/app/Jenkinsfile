@@ -1,9 +1,9 @@
 pipeline {
     agent any
-    environment {
-        DB_ENV = credentials('DB_PRESTA')
-        PRESTA_ENV = credentials('PRESTA_VAR')
-    }
+    // environment {
+    //     DB_ENV = credentials('DB_PRESTA')
+    //     PRESTA_ENV = credentials('PRESTA_VAR')
+    // }
     stages {
         stage('Clean') {
             steps {
@@ -48,12 +48,12 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
+        // stage('Deploy') {
+        //     steps {
+        //         // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
                 
-            }
-        }
+        //     }
+        // }
     }
 
     post {
