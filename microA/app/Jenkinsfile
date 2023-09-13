@@ -48,12 +48,12 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-            steps {
-                // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
+        // stage('Deploy') {
+        //     steps {
+        //         // Cette étape peut inclure le déploiement de votre micro-service, par exemple, en utilisant Docker Compose
                 
-            }
-        }
+        //     }
+        // }
     }
 
     post {
